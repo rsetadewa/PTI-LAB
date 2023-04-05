@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Merchant Mania</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="images/coined.png" alt="Bootstrap" width="30" >
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="#">Main Game</a>
+                        <a class="nav-link" href="#">About Us</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="container-fluid text-center">
+                <h1>Merchant Mania</h1>
+            </div>
+           
+        
+        <div class="row g-0 align-items-center">
+            <div class="col-md text-center">
+                <img id="character-image" src="images/Placeholder.png" class="img-fluid">
+            </div>
+    
+            <div class="col-md">
+                
+            <div class="container-items-center">   
+                <button id="moneyBtn">Click me to earn money!</button>
+                <p>Doubloons: <span id="cash">0</span></p>
+                
+                <p>Click value: +<span id="clickValue">5</span></p>
+                <button id="ArmorBtn">Start selling Armors! (cost: 150 Doubloons)</button>
+
+                <button id="PotionBtn">Start selling Potions! (cost: 300 Doubloons)</button>
+                
+                <p>Stores Opened: x<span id="multiplier">1</span></p>
+                <button id="multiplierBtn">Open another store (cost: 100 Doubloons)</button>
+                
+                <p>Autoclicker: level <span id="autoclicker">0</span></p>
+                <button id="autoclickerBtn">Upgrade autoclicker (cost: 200 Doubloons)</button>
+            </div>
+        </div>
+            
+
+
+
+
+
+       
+            
+        </div>
+        
+        
+    </body>
+    
+    <script type="text/javascript">
+
+        let cash = 0;
+        let multiplier = 1;
+        let autoclickerLevel = 0;
+        let autoclickerInterval = null;
+        let moneyPerClick = 5;
+        let clickValue = 5;
+
+        const moneyBtn = document.getElementById("moneyBtn");
+        const cashAm = document.getElementById("cash");
+        const ArmorBtn = document.getElementById("ArmorBtn");
+        const ArmorAm = document.getElementById("clickValue");
+        const PotionBtn = document.getElementById("PotionBtn");
+        const PotionAm = document.getElementById("clickValue");
+        const multiplierBtn = document.getElementById("multiplierBtn");
+        const multiplierAm = document.getElementById("multiplier");
+        const autoclickerBtn = document.getElementById("autoclickerBtn");
+        const autoclickerAm = document.getElementById("autoclicker");
+      
+
+        function updateCash(amount) {
+        cash += amount * multiplier;
+        cashAm.innerHTML = cash;
+}
+     
+        let ArmorPurchased = false;
+
+        function upgradeArmor() {
+            if (cash >= 150) {
+                cash -= 150;
+                clickValue += 5;
+                cashAm.innerHTML = cash;
+                ArmorAm.innerHTML = clickValue;
+                moneyPerClick = clickValue;
+                ArmorPurchased = true;
+            } else if (ArmorPurchased) {
+                alert("You're already selling Armors!");
+            } else {
+                alert("You don't have enough doubloons to start selling Armors!");
+            }
+        }
+
+        let PotionPurchased = false;
+
+        function upgradePotions() {
+            if (cash >= 300) {
+                cash -= 300;
+                clickValue += 10;
+                cashAm.innerHTML = cash;
+                PotionAm.innerHTML = clickValue;
+                moneyPerClick = clickValue;
+                PotionPurchased = true;
+            } else if (PotionPurchased) {
+                alert("You're already selling Potions!");
+            } else {
+                alert("You don't have enough doubloons to start selling Potions!");
+            }
+        }
+
+        function upgradeMultiplier() {
+            if (cash >= 100) {
+                cash -= 100;
+                multiplier += 1;
+                cashAm.innerHTML = cash;
+                multiplierAm.innerHTML = multiplier;
+            } else {
+                alert("You don't have enough doubloons to open another store!");
+            }
+        }
+
+        let autoclickerIntervalSpeed = 1000;
+
+        function upgradeAutoclick() {
+            if (cash >= 200) {
+                cash -= 200;
+                autoclickerLevel += 1;
+                cashAm.innerHTML = cash;
+                autoclickerAm.innerHTML = autoclickerLevel;
+
+                autoclickerIntervalSpeed = autoclickerIntervalSpeed / 1.05; 
+
+                if (autoclickerInterval) {
+                clearInterval(autoclickerInterval);
+                }
+                autoclickerInterval = setInterval(function() {
+                updateCash(multiplier * autoclickerLevel);
+                }, autoclickerIntervalSpeed);
+            } else {
+                alert("You don't have enough doubloons to upgrade the autoclicker!");
+            }
+        }
+
+        function perClick() {
+            updateCash(moneyPerClick * multiplier);
+        }
+
+        
+
+        ArmorBtn.addEventListener("click", upgradeArmor);
+        PotionBtn.addEventListener("click", upgradePotions);
+        moneyBtn.addEventListener("click", perClick);
+        multiplierBtn.addEventListener("click", upgradeMultiplier);
+        autoclickerBtn.addEventListener("click", upgradeAutoclick);
+
+    </script>
+</html>
