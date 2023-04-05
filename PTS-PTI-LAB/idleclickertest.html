@@ -7,7 +7,7 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand">
                     <img src="images/coined.png" alt="Bootstrap" width="30" >
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,25 +30,38 @@
         
         <div class="row g-0 align-items-center">
             <div class="col-md text-center">
-                <img id="character-image" src="images/Placeholder.png" class="img-fluid">
+                <img id="character-image" src="images/merchantbase.png" class="img-fluid">
             </div>
     
             <div class="col-md">
                 
             <div class="container-items-center">   
-                <button id="moneyBtn">Click me to earn money!</button>
-                <p>Doubloons: <span id="cash">0</span></p>
                 
-                <p>Click value: +<span id="clickValue">5</span></p>
-                <button id="ArmorBtn">Start selling Armors! (cost: 150 Doubloons)</button>
 
-                <button id="PotionBtn">Start selling Potions! (cost: 300 Doubloons)</button>
+
+                <div class="container-fluid text-center">
+                    <div class="list-group w-50 mx-auto justify-content-center">
+                        <a class="list-group-item list-group-item-action list-group-item-warning">Doubloons: <span id="cash">0</span></a>
+                        <a class="list-group-item list-group-item-action list-group-item-danger">Click value: +<span id="clickValue">5</span></a>
+                        <a class="list-group-item list-group-item-action list-group-item-primary">Stores Opened: x<span id="multiplier">1</span></a>
+                        <a class="list-group-item list-group-item-action list-group-item-success">Autoclicker: level <span id="autoclicker">0</span></a>
+                    </div>
+                </div>
                 
-                <p>Stores Opened: x<span id="multiplier">1</span></p>
-                <button id="multiplierBtn">Open another store (cost: 100 Doubloons)</button>
+                <br/>
                 
-                <p>Autoclicker: level <span id="autoclicker">0</span></p>
-                <button id="autoclickerBtn">Upgrade autoclicker (cost: 200 Doubloons)</button>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-warning" id="moneyBtn" type="button">Click me to earn money!</button>
+                    <button class="btn btn-warning" id="ArmorBtn" onclick="deactivatearmor()" type="button">Sell better Armors! (cost: 150 Doubloons)</button>
+                    <button class="btn btn-warning" id="PotionBtn" type="button">Sell better Potions! (cost: 300 Doubloons)</button>
+                    <button class="btn btn-warning" id="multiplierBtn" type="button">Open another store (cost: 100 Doubloons)</button>
+                    <button class="btn btn-warning" id="autoclickerBtn" type="button">Upgrade autoclicker (cost: 200 Doubloons)</button>
+                </div>
+                
+                
+        
+                
+
             </div>
         </div>
             
@@ -88,8 +101,9 @@
         function updateCash(amount) {
         cash += amount * multiplier;
         cashAm.innerHTML = cash;
-}
+        }
      
+
         let ArmorPurchased = false;
 
         function upgradeArmor() {
@@ -150,7 +164,7 @@
                 clearInterval(autoclickerInterval);
                 }
                 autoclickerInterval = setInterval(function() {
-                updateCash(multiplier * autoclickerLevel);
+                updateCash(moneyPerClick * multiplier );
                 }, autoclickerIntervalSpeed);
             } else {
                 alert("You don't have enough doubloons to upgrade the autoclicker!");
@@ -171,3 +185,4 @@
 
     </script>
 </html>
+
