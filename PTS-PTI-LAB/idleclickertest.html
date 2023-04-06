@@ -11,6 +11,14 @@
             background-attachment: fixed;
             background-size: cover;
         }
+
+        .responsive {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 30%;
+            height: auto;
+            max-width: 100%;
+        }
         </style>
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -30,19 +38,19 @@
             </div>
         </nav>
 
-        <div class="container-fluid">
-            <div class="container-fluid text-center">
-                <h1>Merchant Mania</h1>
+        <div class="container">
+            <div class="container text-center">
+                <img src="images/mmlogoplaque.png" height="500"  width="auto" class="responsive">
             </div>
            
         
         <div class="row g-0 align-items-center">
-            <div class="col-md">
+            <div class="col-lg">
                 <div class="container-items-center">   
                     <div class="container-fluid text-center">
                         <div class="list-group w-50 mx-auto justify-content-center">
                             <a class="list-group-item list-group-item-action list-group-item-warning">Doubloons: <span id="cash">0</span></a>
-                            <a class="list-group-item list-group-item-action list-group-item-danger">Click value: +<span id="clickValue">5</span></a>
+                            <a class="list-group-item list-group-item-action list-group-item-danger">Doubloons per Click: +<span id="clickValue">1</span></a>
                             <a class="list-group-item list-group-item-action list-group-item-primary">Stores Opened: x<span id="multiplier">1</span></a>
                             <a class="list-group-item list-group-item-action list-group-item-success">Autoclicker: level <span id="autoclicker">0</span></a>
                         </div>
@@ -51,10 +59,10 @@
                     <br/>
                     
                     <div class="d-grid gap-2 col-6 mx-auto">
-                        <button class="btn btn-warning" id="ArmorBtn" onclick="deactivatearmor()" type="button">Sell better Armors! (cost: 150 Doubloons)</button>
-                        <button class="btn btn-warning" id="PotionBtn" onclick="deactivatepotion()" type="button">Sell better Potions! (cost: 300 Doubloons)</button>
-                        <button class="btn btn-warning" id="multiplierBtn" onclick="deactivatemulti()" type="button">Open another store (cost: 100 Doubloons)</button>
-                        <button class="btn btn-warning" id="autoclickerBtn" type="button">Upgrade autoclicker (cost: 200 Doubloons)</button>
+                        <button class="btn btn-warning" id="ArmorBtn" onclick="deactivatearmor()" type="button">Sell better Armors! (costs: 50 Doubloons)</button>
+                        <button class="btn btn-warning" id="PotionBtn" onclick="deactivatepotion()" type="button">Sell better Potions! (costs: 100 Doubloons)</button>
+                        <button class="btn btn-warning" id="multiplierBtn" onclick="deactivatemulti()" type="button">Open another store (costs: 150 Doubloons)</button>
+                        <button class="btn btn-warning" id="autoclickerBtn" type="button">Upgrade autoclicker (costs: 50 Doubloons)</button>
                     </div>
                 </div>
             </div>
@@ -72,8 +80,8 @@
         let multiplier = 1;
         let autoclickerLevel = 0;
         let autoclickerInterval = null;
-        let moneyPerClick = 5;
-        let clickValue = 5;
+        let moneyPerClick = 1;
+        let clickValue = 1;
 
         const moneyBtn = document.getElementById("moneyBtn");
         const cashAm = document.getElementById("cash");
@@ -90,10 +98,10 @@
             cash += amount * multiplier;
             cashAm.innerHTML = cash;
 
-            if (multiplier >= 10 && multiplier < 20) {
-                document.getElementById("character-image").setAttribute("src", "images/merchant1.png");
-            } else if (multiplier >= 20) {
-                document.getElementById("character-image").setAttribute("src", "images/merchant2.png");
+            if (multiplier >= 5 && multiplier < 10) {
+                document.getElementById("character-image").setAttribute("src", "images/merchantp2.png");
+            } else if (multiplier >= 10) {
+                document.getElementById("character-image").setAttribute("src", "images/merchantp3.png");
             }
         }
 
@@ -101,7 +109,13 @@
             var btn = document.getElementById("ArmorBtn");
             btn.disabled = true;
             var mytimer = setTimeout(activatearmor,1000);
-            document.getElementById("character-image").src = "images/merchantwork3.png";
+            if (multiplier < 5) {
+                document.getElementById("character-image").src = "images/armor1.png";
+            } else if (multiplier  >= 5 && multiplier < 10) {
+                document.getElementById("character-image").src = "images/armor2.png";
+            } else if (multiplier >= 10) {
+                document.getElementById("character-image").src = "images/armor3.png";
+            }
         }
 
         function  activatearmor() {
@@ -109,9 +123,9 @@
             btn.disabled = false;
             if (multiplier < 5) {
                 document.getElementById("character-image").src = "images/merchantbase.png";
-            } else if (multiplier < 10) {
+            } else if (multiplier  >= 5 && multiplier < 10) {
                 document.getElementById("character-image").src = "images/merchantp2.png";
-            } else {
+            } else if (multiplier >= 10) {
                 document.getElementById("character-image").src = "images/merchantp3.png";
             }               
         }
@@ -120,7 +134,13 @@
             var btn = document.getElementById("PotionBtn");
             btn.disabled = true;
             var mytimer = setTimeout(activatepotion,1000);
-            document.getElementById("character-image").src = "images/merchantwork2.png";
+            if (multiplier < 5) {
+                document.getElementById("character-image").src = "images/potion1.png";
+            } else if (multiplier  >= 5 && multiplier < 10) {
+                document.getElementById("character-image").src = "images/potion2.png";
+            } else if (multiplier >= 10) {
+                document.getElementById("character-image").src = "images/potion3.png";
+            }     
         }
 
         function  activatepotion() {
@@ -128,9 +148,9 @@
             btn.disabled = false;
             if (multiplier < 5) {
                 document.getElementById("character-image").src = "images/merchantbase.png";
-            } else if (multiplier < 10) {
+            } else if (multiplier  >= 5 && multiplier < 10) {
                 document.getElementById("character-image").src = "images/merchantp2.png";
-            } else {
+            } else if (multiplier >= 10) {
                 document.getElementById("character-image").src = "images/merchantp3.png";
             }               
         }
@@ -139,7 +159,13 @@
             var btn = document.getElementById("multiplierBtn");
             btn.disabled = true;
             var mytimer = setTimeout(activatemulti,1000);
-            document.getElementById("character-image").src = "images/merchantwork2.png";
+            if (multiplier < 5) {
+                document.getElementById("character-image").src = "images/multi1.png";
+            } else if (multiplier  >= 5 && multiplier < 10) {
+                document.getElementById("character-image").src = "images/multi2.png";
+            } else if (multiplier >= 10) {
+                document.getElementById("character-image").src = "images/multi3.png";
+            } 
         }
 
         function  activatemulti() {
@@ -147,42 +173,42 @@
             btn.disabled = false;
             if (multiplier < 5) {
                 document.getElementById("character-image").src = "images/merchantbase.png";
-            } else if (multiplier < 10) {
+            } else if (multiplier  >= 5 && multiplier < 10) {
                 document.getElementById("character-image").src = "images/merchantp2.png";
-            } else {
+            } else if (multiplier >= 10) {
                 document.getElementById("character-image").src = "images/merchantp3.png";
             }               
         }
 
         function upgradeArmor() {
-            if (cash >= 150) {
-                cash -= 150;
-                clickValue += 5;
+            if (cash >= 50) {
+                cash -= 50;
+                clickValue += 1;
                 cashAm.innerHTML = cash;
                 ArmorAm.innerHTML = clickValue;
                 moneyPerClick = clickValue;
                 ArmorPurchased = true;
             } else {
-                alert("You don't have enough doubloons to start selling Armors!");
+                alert("You don't have enough doubloons sell better Armors!");
             }
         }
 
         function upgradePotions() {
-            if (cash >= 300) {
-                cash -= 300;
-                clickValue += 10;
+            if (cash >= 100) {
+                cash -= 100;
+                clickValue += 4;
                 cashAm.innerHTML = cash;
                 PotionAm.innerHTML = clickValue;
                 moneyPerClick = clickValue;
                 PotionPurchased = true;
             } else {
-                alert("You don't have enough doubloons to start selling Potions!");
+                alert("You don't have enough doubloons to sell better Potions!");
             }
         }
 
         function upgradeMultiplier() {
-            if (cash >= 100) {
-                cash -= 100;
+            if (cash >= 150) {
+                cash -= 150;
                 multiplier += 1;
                 cashAm.innerHTML = cash;
                 multiplierAm.innerHTML = multiplier;
@@ -201,8 +227,8 @@
         let autoclickerIntervalSpeed = 1000;
 
         function upgradeAutoclick() {
-            if (cash >= 200) {
-                cash -= 200;
+            if (cash >= 50) {
+                cash -= 50;
                 autoclickerLevel += 1;
                 cashAm.innerHTML = cash;
                 autoclickerAm.innerHTML = autoclickerLevel;
